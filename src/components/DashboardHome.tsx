@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import {  Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Users } from "lucide-react";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 import {
   Bar,
@@ -26,23 +21,44 @@ import { useQuery } from "@tanstack/react-query";
 function DashboardHome() {
   const { data } = useQuery({
     queryKey: ["vendorsQueryKey"],
-    queryFn: fetchVendors
+    queryFn: fetchVendors,
   });
 
   const vendorTypeData = [
-    { name: "Supplier", value: data?.filter(v => v.type === "supplier").length || 0 },
-    { name: "Service Provider", value: data?.filter(v => v.type === "service provider").length || 0 },
-    { name: "Logistics", value:  data?.filter(v => v.type === "logistics").length || 0 },
+    {
+      name: "Supplier",
+      value: data?.filter((v) => v.type === "supplier").length || 0,
+    },
+    {
+      name: "Service Provider",
+      value: data?.filter((v) => v.type === "service provider").length || 0,
+    },
+    {
+      name: "Logistics",
+      value: data?.filter((v) => v.type === "logistics").length || 0,
+    },
   ];
 
   const criticalityData = [
-    { name: "Low", value:  data?.filter(v => v.criticality === "low").length || 0 },
-    { name: "Medium", value: data?.filter(v => v.criticality === "medium").length || 0 },
-    { name: "High", value: data?.filter(v => v.criticality === "high").length || 0 },
-    { name: "Critical", value: data?.filter(v => v.criticality === "critical").length || 0 },
+    {
+      name: "Low",
+      value: data?.filter((v) => v.criticality === "low").length || 0,
+    },
+    {
+      name: "Medium",
+      value: data?.filter((v) => v.criticality === "medium").length || 0,
+    },
+    {
+      name: "High",
+      value: data?.filter((v) => v.criticality === "high").length || 0,
+    },
+    {
+      name: "Critical",
+      value: data?.filter((v) => v.criticality === "critical").length || 0,
+    },
   ];
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-  
+
   return (
     <main className="p-4">
       <div className="flex justify-between items-center mb-8">
@@ -132,7 +148,11 @@ function DashboardHome() {
                     ))}
                   </Pie>
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Legend />
+                  <Legend
+                    wrapperStyle={{
+                      top: window.innerWidth < 768 ? "auto" : "",
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </ChartContainer>
