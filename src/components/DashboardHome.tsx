@@ -150,7 +150,7 @@ function DashboardHome() {
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend
                     wrapperStyle={{
-                      top: window.innerWidth < 768 ? "auto" : "",
+                      top: typeof window !== "undefined" && window.innerWidth < 768 ? "auto" : "",
                     }}
                   />
                 </PieChart>
