@@ -28,12 +28,16 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { Skeleton } from "../ui/skeleton";
 import { UpdateVendor } from "./UpdateVendor";
 import { DeleteVendor } from "./DeleteVendor";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 
 export const fetchVendors = async (): Promise<Vendor[] | undefined> => {
   const response = await axios.get<ApiResponse>("/api/vendor/get");
   return (response.data.data as Vendor[]) || [];
 };
 function VendorTable({ showActions }: { showActions: boolean }) {
+  const { data: session } = useSession();
+  const user: User = session?.user as User;
   const [searchTerm, setSearchTerm] = useState("");
   const { data, isPending, isError } = useQuery({
     queryKey: ["vendorsQueryKey"],
@@ -130,7 +134,7 @@ function VendorTable({ showActions }: { showActions: boolean }) {
                   <TableHead className="text-gray-700 dark:text-gray-300">
                     Service Provided
                   </TableHead>
-                  {showActions && (
+                  {showActions && user?.canManageVendors && (
                     <TableHead className="text-gray-700 dark:text-gray-300">
                       Actions
                     </TableHead>
@@ -169,7 +173,7 @@ function VendorTable({ showActions }: { showActions: boolean }) {
                     <TableCell className="text-gray-700 dark:text-gray-300">
                       {vendor.serviceProvided}
                     </TableCell>
-                    {showActions && (
+                    {showActions && user?.canManageVendors && (
                       <TableCell>
                         <UpdateVendor
                           _id={vendor._id}
@@ -180,7 +184,7 @@ function VendorTable({ showActions }: { showActions: boolean }) {
                       </TableCell>
                     )}
 
-                    {showActions && (
+                    {showActions && user?.canManageVendors && (
                       <TableCell>
                         <DeleteVendor _id={vendor._id as string} />
                       </TableCell>
