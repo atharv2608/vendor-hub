@@ -1,5 +1,5 @@
 "use client";
-import { Settings, LayoutDashboard, Container, User } from "lucide-react";
+import { LayoutDashboard, Container, User, FileText } from "lucide-react";
 
 import {
   Sidebar,
@@ -34,9 +34,9 @@ const items = [
     icon: User,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Export Data",
+    url: "/dashboard/export",
+    icon: FileText,
   },
 ];
 

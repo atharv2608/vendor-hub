@@ -20,9 +20,6 @@ function page() {
         <div>
           <VendorTable showActions={true} />
         </div>
-        <div>
-          <DownloadReport />
-        </div>
       </div>
     </main>
   );
