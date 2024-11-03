@@ -30,7 +30,7 @@ const items = [
   },
   {
     title: "Users",
-    url: "/dashboard/add-user",
+    url: "/dashboard/users",
     icon: User,
   },
   {
