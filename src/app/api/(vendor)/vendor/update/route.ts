@@ -10,12 +10,12 @@ export async function PUT(request: Request){
         await dbConnect();
         const session = await getServerSession(authOptions)
         const user: User = session?.user as User;
-        // if(!session || !session.user) {
-        //     return sendResponse(false, "Unauthenticated request", 401);
-        // };
-        // if (!user.canManageVendors) {
-        //     return sendResponse(false, "Unauthorized request", 403);
-        //   }
+        if(!session || !session.user) {
+            return sendResponse(false, "Unauthenticated request", 401);
+        };
+        if (!user.canManageVendors) {
+            return sendResponse(false, "Unauthorized request", 403);
+          }
         const {_id, criticality, contact, accountStatus} = await request.json();
         if([_id, criticality, contact, accountStatus].some(field => field.trim().length ===0)){
             return sendResponse(false, "All fields are required", 400);

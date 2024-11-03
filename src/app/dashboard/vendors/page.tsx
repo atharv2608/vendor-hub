@@ -1,12 +1,11 @@
 "use client";
 import { AddVendor } from "@/components/vendors/AddVendor";
-import DownloadReport from "@/components/vendors/DownloadReport";
 import VendorTable from "@/components/vendors/VendorTable";
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import React from "react";
 
-function page() {
+function Page() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
   return (
@@ -25,4 +24,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

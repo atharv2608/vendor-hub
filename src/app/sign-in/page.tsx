@@ -20,7 +20,6 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { signInSchema } from "@/schemas/signInSchema";
 import { signIn } from "next-auth/react";

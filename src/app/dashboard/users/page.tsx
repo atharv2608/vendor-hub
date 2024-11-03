@@ -4,7 +4,7 @@ import { AddUser } from '@/components/users/AddUser'
 import UserTable from '@/components/users/UserTable'
 import { useSession } from 'next-auth/react';
 import { User } from 'next-auth';
-function page() {
+function Page() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
   return (
@@ -23,4 +23,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

@@ -20,13 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";

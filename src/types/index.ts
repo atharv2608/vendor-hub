@@ -28,3 +28,9 @@ export enum AccountStatus {
   INACTIVE = "inactive",
   PENDING = "pending",
 }
+
+
+export type Credentials = {
+  email: string;
+  password: string;
+}

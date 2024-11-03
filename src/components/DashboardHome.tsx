@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -24,7 +24,7 @@ import VendorTable, { fetchVendors } from "./vendors/VendorTable";
 import { useQuery } from "@tanstack/react-query";
 
 function DashboardHome() {
-  const { data, isPending, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["vendorsQueryKey"],
     queryFn: fetchVendors
   });

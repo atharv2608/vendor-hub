@@ -9,13 +9,13 @@ export async function DELETE(request: Request) {
   try {
     const session = await getServerSession(authOptions);
     const user: User = session?.user as User;
-    // if (!session || !session.user) {
-    //   return sendResponse(false, "Unauthenticated request", 401);
-    // }
+    if (!session || !session.user) {
+      return sendResponse(false, "Unauthenticated request", 401);
+    }
 
-    // if (!user.canManageVendors) {
-    //   return sendResponse(false, "Unauthorized request", 403);
-    // }
+    if (!user.canManageVendors) {
+      return sendResponse(false, "Unauthorized request", 403);
+    }
     const { _id } = await request.json();
     if (!_id) {
       return sendResponse(false, "ID is required", 400);

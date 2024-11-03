@@ -4,7 +4,8 @@ import UserModel from "@/models/User.model";
 import { sendResponse } from "@/utils/sendResponse";
 import { getServerSession } from "next-auth";
 
-export async function GET(request: Request) {
+export const dynamic = "force-dynamic"
+export async function GET() {
   await dbConnect();
   try {
     const session = await getServerSession(authOptions);
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
     }
     return sendResponse(true, "Users found", 200, users);
   } catch (error) {
-    console.error("Error getting users information");
+    console.error("Error getting users information:", error);
     return sendResponse(
       false,
       "An error occurred while getting users information",
