@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import { AddUser } from '@/components/users/AddUser'
+import UserTable from '@/components/users/UserTable'
 function page() {
   return (
     <main className="dark:bg-gray-900 p-4 h-full">
@@ -9,6 +10,7 @@ function page() {
           <AddUser />
         </div>
         <div>
+          <UserTable />
         </div>
       </div>
     </main>

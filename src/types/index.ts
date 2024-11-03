@@ -8,6 +8,14 @@ export type Vendor = {
   accountStatus: string;
 };
 
+export type User = {
+  _id: string;
+  name: string;
+  phone: string;
+  email: string;
+  canManageUsers: boolean;
+  canManageVendors: boolean;
+}
 export enum CriticalityStatus {
   LOW = "low",
   MEDIUM = "medium",

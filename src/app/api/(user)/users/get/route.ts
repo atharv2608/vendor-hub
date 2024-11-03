@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
-import VendorModel from "@/models/Vendor.model";
+import UserModel from "@/models/User.model";
 import { sendResponse } from "@/utils/sendResponse";
-import { getServerSession, User } from "next-auth";
+import { getServerSession } from "next-auth";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -11,16 +11,16 @@ export async function GET(request: Request) {
     if (!session || !session.user) {
       return sendResponse(false, "Unauthenticated request", 401);
     }
-    const vendors = await VendorModel.find();
-    if (!vendors) {
-      return sendResponse(false, "No vendors found", 404);
+    const users = await UserModel.find().select("-password");
+    if (!users) {
+      return sendResponse(false, "No users found", 404);
     }
-    return sendResponse(true, "Vendors found", 200, vendors);
+    return sendResponse(true, "Users found", 200, users);
   } catch (error) {
-    console.error("Error getting vendors information");
+    console.error("Error getting users information");
     return sendResponse(
       false,
-      "An error occurred while getting vendors information",
+      "An error occurred while getting users information",
       500
     );
   }

@@ -2,12 +2,25 @@ import dbConnect from "@/lib/dbConnect";
 import { sendResponse } from "@/utils/sendResponse";
 import bcrypt from "bcrypt";
 import UserModel from "@/models/User.model";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { User } from "next-auth";
 
 export async function POST(request: Request) {
   await dbConnect();
 
   try {
-    const { name, email, phone, password, canManageVendors, canManageUsers } = await request.json();
+    const session = await getServerSession(authOptions);
+    const user: User = session?.user as User;
+    if (!session || !session.user) {
+      return sendResponse(false, "Unauthenticated request", 401);
+    }
+
+    if (!user.canManageUsers) {
+      return sendResponse(false, "Unauthorized request", 403);
+    }
+    const { name, email, phone, password, canManageVendors, canManageUsers } =
+      await request.json();
     if (
       [name, email, phone, password].some(
         (field) => field === "" || field === null || field === undefined
@@ -29,7 +42,7 @@ export async function POST(request: Request) {
       phone,
       password: hashedPassword,
       canManageVendors,
-      canManageUsers
+      canManageUsers,
     });
 
     await newUser.save();
