@@ -6,6 +6,8 @@ import { useTheme } from "@/context/ThemeContext";
 import { Moon, Sun } from "lucide-react";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 
 function DashboardLayout({
   children,
@@ -13,7 +15,6 @@ function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const { theme, toggleTheme } = useTheme();
-  const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
@@ -35,6 +36,7 @@ function DashboardLayout({
           {children}
         </main>
       </SidebarProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
