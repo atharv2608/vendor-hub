@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
+import UserModel from "@/models/User.model";
 import VendorModel from "@/models/Vendor.model";
 import { sendResponse } from "@/utils/sendResponse";
 import { getServerSession, User } from "next-auth";
@@ -20,6 +21,11 @@ export async function PUT(request: Request){
         if([_id, criticality, contact, accountStatus].some(field => field.trim().length ===0)){
             return sendResponse(false, "All fields are required", 400);
         }   
+
+        const existingUser = await UserModel.findOne({email: contact})
+        if(existingUser){
+            return sendResponse(false, "System User with similar email already exist", 409);
+        }
         const otherVendorWithSameContact = await VendorModel.findOne({
             _id: { $ne: _id },
             contact,
