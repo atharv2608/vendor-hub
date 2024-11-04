@@ -5,6 +5,7 @@ import UserModel from "@/models/User.model";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { User } from "next-auth";
+import VendorModel from "@/models/Vendor.model";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -29,12 +30,16 @@ export async function POST(request: Request) {
       return sendResponse(false, "All fields are required", 400);
     }
 
-    const exisitingUser = await UserModel.findOne({
+    const existingUser = await UserModel.findOne({
       $or: [{ email }, { phone }],
     });
 
-    if (exisitingUser) return sendResponse(false, "User already exists", 409);
+    if (existingUser) return sendResponse(false, "User with similar contact details already exist", 409);
 
+    const existingVendor = await VendorModel.findOne({contact: email})
+    if(existingVendor){
+      return sendResponse(false, "Similar email is registered in vendors", 409);
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({
       name,

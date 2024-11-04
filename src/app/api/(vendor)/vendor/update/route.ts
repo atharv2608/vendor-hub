@@ -20,7 +20,14 @@ export async function PUT(request: Request){
         if([_id, criticality, contact, accountStatus].some(field => field.trim().length ===0)){
             return sendResponse(false, "All fields are required", 400);
         }   
+        const otherVendorWithSameContact = await VendorModel.findOne({
+            _id: { $ne: _id },
+            contact,
+        })
 
+        if(otherVendorWithSameContact){
+            return sendResponse(false, "Another vendor with the same contact already exists", 409);
+        }
         const updatedVendor = await VendorModel.findByIdAndUpdate(
             _id,
             {

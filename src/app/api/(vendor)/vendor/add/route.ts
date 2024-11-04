@@ -3,6 +3,7 @@ import VendorModel from "@/models/Vendor.model";
 import { sendResponse } from "@/utils/sendResponse";
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
+import UserModel from "@/models/User.model";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -32,6 +33,11 @@ export async function POST(request: Request) {
         "Vendor with the same contact already exists",
         409
       );
+    }
+
+    const existingUser = await UserModel.findOne({email: contact});
+    if(existingUser){
+      return sendResponse(false, "Similar email is registered in users", 409)
     }
 
     const newVendor = new VendorModel({
