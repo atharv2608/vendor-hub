@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
@@ -41,6 +42,13 @@ const items = [
 ];
 
 export function LeftSidebar() {
+
+  const {setOpenMobile, isMobile} = useSidebar();
+  const toggleMobile = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }
   return (
     <Sidebar className="shadow-md">
       <SidebarContent>
@@ -50,7 +58,7 @@ export function LeftSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild onClick={toggleMobile}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
